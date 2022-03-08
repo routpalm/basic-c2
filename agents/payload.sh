@@ -34,19 +34,19 @@ if ! cd "$NEW_DIR"; then
   exit 1
 fi
 
-echo "Downloading script..."
+echo "Downloading agent..."
 
 if ! wget ${WGET_URL}; then
-  echo "ERROR: can't download script" >&2
+  echo "ERROR: can't download agent" >&2
   exit 1
 fi
 
 if ! chmod +x $FILE; then
-  echo "ERROR: can't make script executable" >&2
+  echo "ERROR: can't make agent executable" >&2
   exit 1
 fi
 
-echo "Script downloaded... creating cronjob"
+echo "Agent downloaded... creating cronjob"
 
 if ! cd ~; then
   echo "ERROR: Can't access user home directory" >&2
