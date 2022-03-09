@@ -11,10 +11,38 @@ SCRIPT_PATH="$0"
 delete_self() {
   echo "Shredding self..."; shred -u ${SCRIPT_PATH};
 }
+get_package_manager(){
+  declare -A osInfo;
+  osInfo[/etc/redhat-release]=yum
+  osInfo[/etc/arch-release]=pacman
+  osInfo[/etc/SuSE-release]=zypp
+  osInfo[/etc/debian_version]=apt-get
+
+  # shellcheck disable=SC2068
+  for f in ${!osInfo[@]}
+  do
+      if [[ -f $f ]];then
+          echo ${osInfo[$f]}
+      fi
+  done
+}
+
+package_manager="$(get_package_manager)"
 
 if [ ! -x "$wget" ]; then
-  echo "ERROR: No wget." >&2
-  exit 1
+  echo "No wget. Downloading..." >&2
+  if [ "$package_manager" = "yum" ];then
+    yum install wget -y
+  fi
+  if [ "$package_manager" = "pacman" ];then
+    pacman -S wget --noconfirm
+  fi
+  if [ "$package_manager" = "zypp" ];then
+    zypper -n install wget
+  fi
+  if [ "$package_manager" = "apt-get" ];then
+    apt-get install wget -y
+  fi
 fi
 
 echo "Making new directory..."
